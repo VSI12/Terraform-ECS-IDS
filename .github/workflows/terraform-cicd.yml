@@ -36,9 +36,17 @@ jobs:
       #   run: terraform plan
 
       - name: Terraform Apply
-        run: terraform destroy -target=aws_lb -target=aws_ecs_cluster -target=aws_vpc -auto-approve
+        run: terraform destroy \
+            -target=aws_lb.ids_alb \
+            -target=aws_ecs_cluster.ids_cluster \
+            -target=aws_vpc.ids_vpc \
+            -target=aws_vpc_endpoint.dkr-endpoint \
+            -target=aws_vpc_endpoint.ecr-endpoint \
+            -target=aws_vpc_endpoint.s3-gateway \
+            -target=aws_vpc_endpoint.logs-endpoint \
+            -auto-approve
 
-  build-and-push:
+  build-and-push: 
       name: "Build and Deploy to ECS"
       runs-on: ubuntu-latest
       needs: terraform
