@@ -16,3 +16,23 @@ resource "aws_internet_gateway" "ids-vpc-igw" {
     Name = "ids-igw"
   }
 }
+# Public Subnets in Different Availability Zones
+resource "aws_subnet" "public-a" {
+  vpc_id            = aws_vpc.ids-vpc.id
+  cidr_block        = "10.1.1.0/24"
+  availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "IDS public-subnet-a"
+  }
+}
+
+resource "aws_subnet" "public-b" {
+  vpc_id            = aws_vpc.ids-vpc.id
+  cidr_block        = "10.1.2.0/24"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "IDS public-subnet-b"
+  }
+}
