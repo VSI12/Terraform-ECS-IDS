@@ -36,7 +36,7 @@ jobs:
       #   run: terraform plan
 
       - name: Terraform Apply
-        run: terraform destroy -auto-approve
+        run: terraform destroy -target=aws_lb -target=aws_ecs_cluster -target=aws_vpc -auto-approve
 
   build-and-push:
       name: "Build and Deploy to ECS"
