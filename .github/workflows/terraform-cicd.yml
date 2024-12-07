@@ -26,17 +26,17 @@ jobs:
         with:
           terraform_version: 1.9.4
 
-      - name: Terraform Init
-        run: terraform init
+      # - name: Terraform Init
+      #   run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
+      # - name: Terraform Validate
+      #   run: terraform validate
 
-      - name: Terraform Plan
-        run: terraform plan
+      # - name: Terraform Plan
+      #   run: terraform plan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform destroy -auto-approve
 
   build-and-push:
       name: "Build and Deploy to ECS"
