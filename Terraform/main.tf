@@ -41,3 +41,9 @@ module "ecs" {
   alb_listener    = module.alb.aws_lb_listener
   ecr_arn         = module.ecr.repository_arn
 }
+
+module "alb" {
+  source  = "./modules/alb"
+  vpc_id  = module.vpc.vpc_id
+  subnets = module.vpc.public_subnet_ids
+}
