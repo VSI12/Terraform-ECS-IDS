@@ -4,11 +4,15 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   terraform:
     name: "Terraform Infrastructure"
     runs-on: ubuntu-latest
+    env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
     defaults:
       run:
         working-directory: ./Terraform
@@ -24,17 +28,53 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
 
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Terraform Plan
+        run: terraform plan
+
       - name: Terraform Apply
-        run: terraform destroy -auto-approve
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: terraform apply -auto-approve
+
+  build-and-push:
+      name: "Build and Deploy to ECS"
+      runs-on: ubuntu-latest
+      needs: terraform
+
+      defaults:
+        run:
+          working-directory: ./IDS
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v3
+
+        - name: Download ECR URI artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: ecr-repo-uri
+            path: ./IDS
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+        - name: Log in to Amazon ECR
+          run: |
+            ECR_REPO_URI=$(cat ecr-repo-uri/ecr_repo_uri.txt)
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REPO_URI
+
+        - name: Build Docker image
+          run: |
+            ECR_REPO_URI=$(cat ./IDS/ecr_repo_uri.txt)
+            docker build -t $ECR_REPO_URI:latest .
+
+        - name: Push Docker image to ECR
+          run: |
+            ECR_REPO_URI=$(cat ./IDS/ecr_repo_uri.txt)
+            docker push $ECR_REPO_URI:latest
+
