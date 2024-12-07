@@ -20,3 +20,7 @@ module "tf-state" {
   bucket_name = local.bucket_name
   table_name  = local.table_name
 }
+
+module "vpc" {
+  source = "./modules/vpc"
+}
