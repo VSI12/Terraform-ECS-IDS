@@ -39,10 +39,10 @@ jobs:
         run: terraform apply -auto-approve
 
         # Export the ECR URI as an artifact
-      - name: Export ECR Repository URI
+      - name: Save ECR URI to file
         run: |
-          ECR_URI=$(terraform output -raw ecr_repository_uri)
-          echo $ECR_URI > ecr_repo_uri.txt
+          echo "${{ steps.terraform.outputs.repository_url }}" > ecr-repo-uri/ecr_repo_uri.txt
+      
       
       - name: Upload ECR URI as Artifact
         uses: actions/upload-artifact@v3
