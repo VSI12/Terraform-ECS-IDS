@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Model</title>
+    <link rel="icon" type="image/x-icon" href="../static/CSS/images/choice.png">
+    <link rel="stylesheet" type="text/css" href="../static/CSS/model.css"> 
+    <link href="https://fonts.cdnfonts.com/css/isocteur" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/isocteur');
+    </style>
+</head>
+<body>
+    <div class="container">
+         <header class="black-section">
+            <a href="/" class="logo">IDS</a>
+
+            <input type="checkbox" name="" id="check">
+            <label for="check" class="icons">
+              <i class='bx bx-menu' id="menu"></i>
+              <i class='bx bx-x' id="close"></i>
+            </label>
+
+            <nav class="navbar">
+              <a href="/" class="Home">Home</a>
+              <a href="/model" class="Models">Models</a>
+              <a href="" class="about">About Project</a>
+            </nav>
+         </header>
+     
+
+      <section class="content-section">
+        <div class="text">
+            CHOOSE A MACHINE LEARNING MODEL
+        </div>
+        <div class="content">
+          
+          <div class="box" id="DT" onclick="window.location.href='/upload'">
+              <h1>Decision <br> Tree</h1>
+              <h3>with <br> feature selection</h3>
+          </div>
+
+          <div class="box" id="KNN" onclick="window.location.href='/upload'">
+              <h1>KNN</h1>
+              <h2>(K-Nearest Neighbour)</h2>
+              <h3>with <br> feature selection</h3>
+          </div>
+
+          <div class="box" id="RF" onclick="window.location.href='/upload'">
+              <h1>Random <br>Forest</h1>
+              <h3>with <br> feature selection</h3>
+          </div>
+
+          <div class="box" id="NB" onclick="window.location.href='/upload'">
+            <h1>Gaussian <br> Naive Bayes</h1>
+            <h3>with <br> feature selection</h3>
+        </div>
+        </div>
+      </section>
+    </div>
+    <script src="static/JavaScript/model.js"></script>
+</body>
+</html>

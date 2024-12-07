@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload DataSet</title>
+    <link rel="icon" type="image/x-icon" href="../static/CSS/images/file.png">
+    <link rel="stylesheet" type="text/css" href="../static/CSS/upload.css"> 
+    <link href="https://fonts.cdnfonts.com/css/isocteur" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/isocteur');
+            /* Style for the Choose File input field */
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+      <header class="black-section">
+        <a href="/" class="logo">IDS</a>
+
+        <input type="checkbox" name="" id="check">
+        <label for="check" class="icons">
+          <i class='bx bx-menu' id="menu"></i>
+          <i class='bx bx-x' id="close"></i>
+        </label>
+
+        <nav class="navbar">
+          <a href="/" class="Home">Home</a>
+          <a href="/model" class="Models">Models</a>
+          <a href="" class="about">About Project</a>
+        </nav>
+     </header>
+      <section class="content-section">
+        <div class="text">
+          UPLOAD YOUR DATASET FOR TESTING.
+        </div>
+        <div class="content">
+            <div class="box">
+              <i class='bx bx-cloud-upload' style='color: aliceblue;' id="icon" ></i>
+              <div class="text_under">
+                <h1 class="red">NOTE: THIS FILE HAS TO BE IN <br> THE CSV FORMAT <br>
+                AND MUST BE IN THE SAME FORMAT AS <br>
+                THE NSL-KDD DATASET.</h1>
+                <h1 class="dt">Please Choose your file</h1>
+              </div>
+              
+              <div class="click">
+                <form action="/results" method="POST" enctype="multipart/form-data" accept=".csv">
+                  <div class="input">
+                      <input type="file" name="file" id="file" accept="CSV/*" required>
+                      <input type="submit" value="sumbit file">
+                  </div>    
+                </form>
+              </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+</body>
+</html>
