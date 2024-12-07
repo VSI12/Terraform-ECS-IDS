@@ -1,0 +1,196 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(87, 86, 86, 0.267),rgba(0,0,0,.9)), repeating-linear-gradient(0, transparent, transparent 2px, rgba(0, 0, 0, 0.363) 3px, black 3px),
+		url(images/Untitled.png);
+    background-repeat: no-repeat;
+    background-position: center;
+   background-attachment: fixed;
+   background-size: cover;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .container {
+    height: 100%;
+  }
+  
+ /* nav bar */
+.black-section {
+  background-color: rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  padding: 1.3rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'ISOCTEUR', sans-serif;
+  z-index: 100;
+}
+.logo{
+  font-size: 3rem;
+  color: aliceblue;
+  text-decoration: none;
+  cursor: pointer;
+}
+.navbar a{
+  font-size: 1.5rem;
+  color: aliceblue;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 2.7rem;
+}
+.navbar a:hover{
+  color: aqua;
+}
+#check{
+  display: none;
+}
+.icons{
+  position: absolute;
+  right: 5%;
+  color: aliceblue;
+  font-size: 3rem;
+  cursor: pointer;
+  display: none;
+}
+@media (max-width: 740px ){
+  .icons{
+    display: inline-flex;
+  }
+  #check:checked~.icons #menu{
+    display: none;
+  }
+  #check:checked~.icons #close{
+    display: inline-flex;
+  }
+  .icons #close{
+    display: none;
+  }
+  .navbar{
+    position: absolute;
+    top: 9vh;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(20px);
+    transition: .3s ease;
+  }
+  #check:checked~.navbar{
+    height: 17.7rem;
+    z-index: 100;
+  }
+  .navbar a{
+    display: block;
+    font-size: 1.1rem;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .navbar a:hover{
+    color: aqua;
+  }
+}
+
+  
+.content-section {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+  .content {
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+  }
+  
+  .box {
+    text-align: center;
+    padding-top: 5vh;
+    padding-bottom: 10vh;
+    background-color: rgba(0, 0, 0, 0.596); /* Sample background color */
+    backdrop-filter: blur(10px);
+  
+    font-family: 'ISOCTEUR', sans-serif;
+  
+    color: white;
+    overflow: hidden;
+    border-radius: 50px;
+  }
+#icon{
+  font-size: 4rem;
+}
+.text{
+    padding-top: 2%;
+    padding-bottom:0%;
+    font-size: clamp(25px,2.5vw,45px);
+    font-family: 'ISOCTEUR', sans-serif;
+    font-weight: 500;
+    
+    color:rgb(255, 255, 255);
+    letter-spacing: 3px;
+    word-wrap: break-word;
+}
+.red{
+  font-size: clamp(25px, 1.7vw,30px);
+    color: red;
+    font-weight: 50;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.dt{
+  font-size: clamp(20px, 1.5vw,25px);
+  font-weight: 50;
+  padding-top: 35px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+input[type="submit"] {
+    padding: 10px 10px; 
+    /* padding: 10px 20px; */
+    border-radius: 5px;
+    color: #ffffff;
+    background: #313132;
+    border: none; 
+    cursor: pointer; 
+    font-size: 15px;
+    font-family: 'ISOCTEUR', sans-serif;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+  
+  
+}
+input[type="submit"]:hover {
+    background-color:rgb(0, 0, 0);
+    color:aqua;
+    font-weight: 800;
+
+}
+
+
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  font-family: 'ISOCTEUR', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 15px;
+  background: #313132;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: rgb(0, 0, 0);
+  color:aqua;
+  font-weight: 800;
+}
+
