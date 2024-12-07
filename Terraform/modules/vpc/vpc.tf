@@ -56,3 +56,17 @@ resource "aws_subnet" "private-b" {
     Name = "IDS private-subnet-b"
   }
 }
+
+# Route table for public subnets
+resource "aws_route_table" "ids-public-rt" {
+  vpc_id = aws_vpc.ids-vpc.id
+
+  tags = {
+    Name = "IDS Public-route-table"
+  }
+}
+resource "aws_route" "ids-public-rt-route" {
+  route_table_id         = aws_route_table.ids-public-rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.ids-vpc-igw.id
+}
