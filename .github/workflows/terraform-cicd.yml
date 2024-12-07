@@ -38,6 +38,18 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+        # Export the ECR URI as an artifact
+      - name: Export ECR Repository URI
+        run: |
+          ECR_URI=$(terraform output -raw ecr_repository_uri)
+          echo $ECR_URI > ecr_repo_uri.txt
+      
+      - name: Upload ECR URI as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ecr-repo-uri
+          path: ecr_repo_uri.txt
+
   build-and-push: 
       name: "Build and Deploy to ECS"
       runs-on: ubuntu-latest
@@ -65,7 +77,7 @@ jobs:
 
         - name: Log in to Amazon ECR
           run: |
-            ECR_REPO_URI=$(cat ecr-repo-uri/ecr_repo_uri.txt)
+            ECR_REPO_URI=$(cat ./IDS/ecr_repo_uri.txt)
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REPO_URI
 
         - name: Build Docker image
