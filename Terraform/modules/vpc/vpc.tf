@@ -79,4 +79,22 @@ resource "aws_route_table_association" "public-subnet-association-b" {
   subnet_id      = aws_subnet.public-b.id
   route_table_id = aws_route_table.ids-public-rt.id
 }
+# Route table for private subnets
+resource "aws_route_table" "ids-private-rt" {
+  vpc_id = aws_vpc.ids-vpc.id
+
+  tags = {
+    Name = "IDS Private-route-table"
+  }
+}
+
+resource "aws_route_table_association" "private-subnet-association-a" {
+  subnet_id      = aws_subnet.private-a.id
+  route_table_id = aws_route_table.ids-private-rt.id
+}
+
+resource "aws_route_table_association" "private-subnet-association-b" {
+  subnet_id      = aws_subnet.private-b.id
+  route_table_id = aws_route_table.ids-private-rt.id
+}
 
