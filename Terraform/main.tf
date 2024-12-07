@@ -28,3 +28,16 @@ module "ecr" {
   source        = "./modules/ecr"
   ecr_repo_name = local.ecr_repo_name
 }
+module "ecs" {
+  source          = "./modules/ecs"
+  vpc_id          = module.vpc.vpc_id
+  alb_sg          = module.alb.alb_security_group_id
+  ids_ecs_cluster = local.ids_ecs_cluster
+  ecr_uri         = module.ecr.repository_url
+  alb_tg          = module.alb.alb_tg_arn
+  container_name  = local.container_name
+  subnets         = module.vpc.private_subnet_ids
+  role_name       = local.role_name
+  alb_listener    = module.alb.aws_lb_listener
+  ecr_arn         = module.ecr.repository_arn
+}
