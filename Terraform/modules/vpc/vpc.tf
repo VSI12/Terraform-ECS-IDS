@@ -98,3 +98,54 @@ resource "aws_route_table_association" "private-subnet-association-b" {
   route_table_id = aws_route_table.ids-private-rt.id
 }
 
+# VPC Endpoints (ECR, DKR, CloudWatch Logs, S3)
+resource "aws_vpc_endpoint" "ecr-endpoint" {
+  vpc_id              = aws_vpc.ids-vpc.id
+  service_name        = "com.amazonaws.us-east-1.ecr.api"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private-a.id, aws_subnet.private-b.id]
+  security_group_ids  = [aws_security_group.vpc_endpoint_sg.id]
+  private_dns_enabled = true
+
+  tags = {
+    name = "ECR-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "dkr-endpoint" {
+  vpc_id              = aws_vpc.ids-vpc.id
+  service_name        = "com.amazonaws.us-east-1.ecr.dkr"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private-a.id, aws_subnet.private-b.id]
+  security_group_ids  = [aws_security_group.vpc_endpoint_sg.id]
+  private_dns_enabled = true
+
+  tags = {
+    name = "DKR-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "logs-endpoint" {
+  vpc_id              = aws_vpc.ids-vpc.id
+  service_name        = "com.amazonaws.us-east-1.logs"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private-a.id, aws_subnet.private-b.id]
+  security_group_ids  = [aws_security_group.vpc_endpoint_sg.id]
+  private_dns_enabled = true
+
+  tags = {
+    name = "cloudwatchlogs-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "s3-gateway" {
+  vpc_id            = aws_vpc.ids-vpc.id
+  service_name      = "com.amazonaws.us-east-1.s3"
+  vpc_endpoint_type = "Gateway"
+  route_table_ids   = [aws_route_table.ids-private-rt.id]
+
+  tags = {
+    Name = "s3-gateway-endpoint"
+  }
+}
+
