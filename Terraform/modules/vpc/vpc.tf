@@ -36,3 +36,23 @@ resource "aws_subnet" "public-b" {
     Name = "IDS public-subnet-b"
   }
 }
+# Private Subnets in Different Availability Zones
+resource "aws_subnet" "private-a" {
+  vpc_id            = aws_vpc.ids-vpc.id
+  cidr_block        = "10.1.3.0/24"
+  availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "IDS private-subnet-a"
+  }
+}
+
+resource "aws_subnet" "private-b" {
+  vpc_id            = aws_vpc.ids-vpc.id
+  cidr_block        = "10.1.4.0/24"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "IDS private-subnet-b"
+  }
+}
