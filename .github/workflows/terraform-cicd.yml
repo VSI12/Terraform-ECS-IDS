@@ -38,17 +38,6 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
-        # Export the ECR URI as an artifact
-      - name: Save ECR URI to file
-        run: |
-          echo "${{ steps.terraform.outputs.repository_url }}" > ecr-repo-uri/ecr_repo_uri.txt
-      
-      
-      - name: Upload ECR URI as Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ecr-repo-uri
-          path: ecr_repo_uri.txt
 
   build-and-push: 
       name: "Build and Deploy to ECS"
@@ -62,12 +51,6 @@ jobs:
         - name: Checkout Code
           uses: actions/checkout@v3
 
-        - name: Download ECR URI artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: ecr-repo-uri
-            path: ./IDS
-
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v1
           with:
@@ -78,17 +61,16 @@ jobs:
         - name: Log in to Amazon ECR
           run: |
             ECR_REPO_URI=$(cat ./IDS/ecr_repo_uri.txt)
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REPO_URI
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_DKR }}
 
         - name: Build Docker image
           run: |
-            ECR_REPO_URI=$(cat ./IDS/ecr_repo_uri.txt)
-            docker build -t $ECR_REPO_URI:latest .
+            
+            docker build -t ${{ secrets.AWS_DKR }}/${{ secrets.AWS_REPO }}:latest
 
         - name: Push Docker image to ECR
           run: |
-            ECR_REPO_URI=$(cat ./IDS/ecr_repo_uri.txt)
-            docker push $ECR_REPO_URI:latest
+            docker push ${{ secrets.AWS_DKR }}/${{ secrets.AWS_REPO }}:latest
           env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
