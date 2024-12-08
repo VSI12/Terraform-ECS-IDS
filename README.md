@@ -1,4 +1,4 @@
-# Deploying Containerized Applications to AWS ECS Using Terraform and CI/CD
+# Deploying a Containerized Web-App to AWS ECS Using Terraform and CI/CD
 
 ## Project Overview
 This project focuses on deploying a dockerized Flask Classification based Intrusion Detection System (IDS) to AWS ECS (Elastic Container Service) using Terraform for provisioning AWS infrastructure and GitHub Actions for CI/CD automation.
